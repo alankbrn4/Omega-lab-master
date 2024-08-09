@@ -1,0 +1,30 @@
+
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: Wv9FXroi47
+      MYSQL_DATABASE: omega
+    ports:
+      - "3307:3306"
+    
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+
+  omega-app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+      - mongodb
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/omega
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Wv9FXroi47
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/labclinico

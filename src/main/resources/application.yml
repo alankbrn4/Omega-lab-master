@@ -1,0 +1,19 @@
+server:
+  port: 8080
+  
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: patient-service
+        uri: lb://PATIENT-SERVICE
+        predicates:
+        - Path=/api/pacientes/**
+        filters:
+        - StripPrefix=1
+      - id: doctor-service
+        uri: lb://DOCTOR-SERVICE
+        predicates:
+        - Path=/api/doctores/**
+        filters:
+        - StripPrefix=1
